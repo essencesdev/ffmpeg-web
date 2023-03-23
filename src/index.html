@@ -1,175 +1,181 @@
-<html>
-	<link rel="stylesheet" href="/colors.css" />
-	<style>
-		:root {
-			--spacing-1: 5px;
-			--spacing-2: 12px;
-			--spacing-3: 24px;
-			--spacing-4: 36px;
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>ffmpeg-web</title>
+		<link rel="stylesheet" href="/colors.css" />
+		<style>
+			:root {
+				--spacing-1: 5px;
+				--spacing-2: 12px;
+				--spacing-3: 24px;
+				--spacing-4: 36px;
 
-			--size-1: 1px;
-			--size-2: 12px;
-			--size-3: 24px;
-			--size-4: 50px;
+				--size-1: 1px;
+				--size-2: 12px;
+				--size-3: 24px;
+				--size-4: 50px;
 
-			--font-size-1: 12px;
-			--font-size-2: 16px;
-			--font-size-3: 24px;
-		}
-		body {
-			background: var(--bg);
-			color: var(--fg);
-			font-family: Verdana, Geneva, Tahoma, sans-serif;
-		}
+				--font-size-1: 12px;
+				--font-size-2: 16px;
+				--font-size-3: 24px;
+			}
+			body {
+				background: var(--bg);
+				color: var(--fg);
+				font-family: Verdana, Geneva, Tahoma, sans-serif;
+			}
 
-		#title {
-			color: var(--green-1);
-			padding: var(--spacing-2);
-		}
+			#title {
+				color: var(--green-1);
+				padding: var(--spacing-2);
+			}
 
-		#main {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			background-color: var(--grey-1);
-			margin: var(--spacing-3);
-			padding: var(--spacing-3);
-			border-radius: var(--size-3);
-		}
+			#main {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				background-color: var(--grey-1);
+				margin: var(--spacing-3);
+				padding: var(--spacing-3);
+				border-radius: var(--size-3);
+			}
 
-		#file-upload {
-			border: var(--size-1) dashed var(--blue-1);
-			border-radius: var(--spacing-2);
-			padding: var(--spacing-2);
-			background-color: var(--bg);
-			color: var(--fg);
-		}
-		label[for="file-upload"] {
-			cursor: pointer;
-			display: flex;
-			min-width: 250px;
-			max-width: 20%;
-			aspect-ratio: 1/1;
-			justify-content: center;
-			align-items: center;
-			text-align: center;
-			border: var(--size-1) dashed var(--blue-1);
-			border-radius: var(--size-4);
-			padding: var(--spacing-2);
-		}
+			#file-upload {
+				border: var(--size-1) dashed var(--blue-1);
+				border-radius: var(--spacing-2);
+				padding: var(--spacing-2);
+				background-color: var(--bg);
+				color: var(--fg);
+			}
+			label[for="file-upload"] {
+				cursor: pointer;
+				display: flex;
+				min-width: 250px;
+				max-width: 20%;
+				aspect-ratio: 1/1;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				border: var(--size-1) dashed var(--blue-1);
+				border-radius: var(--size-4);
+				padding: var(--spacing-2);
+			}
 
-		#description {
-			max-width: 80ch;
-			font-size: var(--font-size-2);
-			line-height: var(--font-size-3);
-			margin-top: var(--spacing-2);
-		}
+			#description {
+				max-width: 80ch;
+				font-size: var(--font-size-2);
+				line-height: var(--font-size-3);
+				margin-top: var(--spacing-2);
+			}
 
-		#editor {
-			display: flex;
-			flex-direction: column;
-			width: 100%;
-		}
-		#media-container {
-			display: flex;
-			justify-content: center;
-			margin-top: var(--spacing-2);
-			margin-bottom: var(--spacing-2);
-		}
-		.media-displayer {
-			max-width: 45%;
-			aspect-ratio: 1/1;
-			display: block;
-			text-align: center;
-			margin: var(--spacing-2);
-			background-color: var(--bg);
-		}
-		#original-media.media-displayer {
-			border: var(--size-1) solid var(--green-1);
-		}
-		#processed-media.media-displayer {
-			border: var(--size-1) solid var(--orange-1);
-		}
+			#editor {
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+			}
+			#media-container {
+				display: flex;
+				justify-content: center;
+				margin-top: var(--spacing-2);
+				margin-bottom: var(--spacing-2);
+			}
+			.media-displayer {
+				max-width: 45%;
+				aspect-ratio: 1/1;
+				display: block;
+				text-align: center;
+				margin: var(--spacing-2);
+				background-color: var(--bg);
+			}
+			#original-media.media-displayer {
+				border: var(--size-1) solid var(--green-1);
+			}
+			#processed-media.media-displayer {
+				border: var(--size-1) solid var(--orange-1);
+			}
 
-		#ffmpeg-command-container,
-		#ffmpeg-output-container {
-			display: flex;
-			flex-grow: 1;
-			margin-left: var(--spacing-2);
-			margin-right: var(--spacing-2);
-		}
-		#ffmpeg-command {
-			flex-grow: 1;
-			min-width: 0;
-			border: var(--size-1) solid var(--grey-4);
-			border-radius: 0 var(--size-2) 0 0;
-		}
-		#execute-ffmpeg {
-			border: calc(var(--size-1) * 5) solid var(--pink-1);
-		}
-		#execute-ffmpeg:hover {
-			border: calc(var(--size-1) * 5) solid var(--pink-2);
-			cursor: pointer;
-		}
-		#ffmpeg-command,
-		#execute-ffmpeg {
-			font-size: var(--font-size-3);
-			line-height: var(--font-size-3);
-			background: var(--bg);
-			color: var(--fg);
-			padding: var(--spacing-1);
-			font-family: monospace, monospace;
-		}
+			#ffmpeg-command-container,
+			#ffmpeg-output-container {
+				display: flex;
+				flex-grow: 1;
+				margin-left: var(--spacing-2);
+				margin-right: var(--spacing-2);
+			}
+			#ffmpeg-command {
+				flex-grow: 1;
+				min-width: 0;
+				border: var(--size-1) solid var(--grey-4);
+				border-radius: 0 var(--size-2) 0 0;
+			}
+			#execute-ffmpeg {
+				border: calc(var(--size-1) * 5) solid var(--pink-1);
+			}
+			#execute-ffmpeg:hover {
+				border: calc(var(--size-1) * 5) solid var(--pink-2);
+				cursor: pointer;
+			}
+			#ffmpeg-command,
+			#execute-ffmpeg {
+				font-size: var(--font-size-3);
+				line-height: var(--font-size-3);
+				background: var(--bg);
+				color: var(--fg);
+				padding: var(--spacing-1);
+				font-family: monospace, monospace;
+			}
 
-		#progress-bar {
-			flex-grow: 1;
-			margin-left: var(--spacing-2);
-			margin-right: var(--spacing-2);
-			display: none;
-		}
+			#progress-bar {
+				flex-grow: 1;
+				margin-left: var(--spacing-2);
+				margin-right: var(--spacing-2);
+				display: none;
+			}
 
-		#progress-bar[max] {
-			display: block;
-		}
+			#progress-bar[max] {
+				display: block;
+			}
 
-		#ffmpeg-output-container {
-			border: var(--size-1) solid var(--grey-4);
-			padding: var(--spacing-2);
-			border-radius: 0 0 var(--size-2) var(--size-2);
-		}
-		#output {
-			overflow: auto;
-			max-height: 300px;
-		}
-		#ffmpeg-output-container > summary {
-			cursor: pointer;
-		}
+			#ffmpeg-output-container {
+				border: var(--size-1) solid var(--grey-4);
+				padding: var(--spacing-2);
+				border-radius: 0 0 var(--size-2) var(--size-2);
+			}
+			#output {
+				padding: var(--spacing-1);
+				overflow: auto;
+				max-height: 300px;
+			}
+			#ffmpeg-output-container > summary {
+				cursor: pointer;
+			}
 
-		.popup {
-			position: absolute;
-			margin: var(--spacing-3);
-			border: var(--size-1) solid var(--red-1);
-			background-color: var(--pink-1);
-			padding: var(--spacing-1);
-			top: 0;
-			left: 0;
-		}
+			.popup {
+				position: absolute;
+				margin: var(--spacing-3);
+				border: var(--size-1) solid var(--red-1);
+				background-color: var(--pink-1);
+				padding: var(--spacing-1);
+				top: 0;
+				left: 0;
+			}
 
-		#file-upload:valid,
-		#file-upload:invalid ~ #description,
-		#file-upload:valid
-			~ #editor
-			#file-upload:invalid
-			~ label[for="file-upload"] {
-			display: block;
-		}
-		#file-upload:invalid,
-		#file-upload:valid ~ #description,
-		#file-upload:invalid ~ #editor,
-		#file-upload:valid ~ label[for="file-upload"] {
-			display: none;
-		}
-	</style>
+			#file-upload:valid,
+			#file-upload:invalid ~ #description,
+			#file-upload:valid
+				~ #editor
+				#file-upload:invalid
+				~ label[for="file-upload"] {
+				display: block;
+			}
+			#file-upload:invalid,
+			#file-upload:valid ~ #description,
+			#file-upload:invalid ~ #editor,
+			#file-upload:valid ~ label[for="file-upload"] {
+				display: none;
+			}
+		</style>
+	</head>
 	<body>
 		<h1 id="title"> FFmpeg in the browser </h1>
 		<div id="main">
@@ -192,6 +198,8 @@
 				<section id="ffmpeg-command-container">
 					<button id="execute-ffmpeg">ffmpeg</button>
 					<input
+						autocapitalize="none"
+						autocorrect="off"
 						id="ffmpeg-command"
 						placeholder="-i (yourfile) (newfile)"
 					/>

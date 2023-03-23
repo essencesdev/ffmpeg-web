@@ -15,11 +15,12 @@ export class MediaDisplayElement extends HTMLElement {
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				height: 100%;
-				width: 100%;
+				height: calc(100% - 20px);
+				width: calc(100% - 20px);
+				padding: 10px;
 			}
 			.media-container:empty::after {
-				content: "No source detected";
+				content: "No source";
 			}
 			.download-link {
 				position: absolute;
