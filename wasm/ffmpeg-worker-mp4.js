@@ -5053,7 +5053,7 @@ var dynCall_iiiji = Module["dynCall_iiiji"] = asm["dynCall_iiiji"]
 var dynCall_jiiij = Module["dynCall_jiiij"] = asm["dynCall_jiiij"]
 /** @type {function(...*):?} */
 var dynCall_iij = Module["dynCall_iij"] = asm["dynCall_iij"]
-var _ff_h264_cabac_tables = Module['_ff_h264_cabac_tables'] = 398284;
+var _ff_h264_cabac_tables = Module['_ff_h264_cabac_tables'] = 400364;
 
 // include: postamble.js
 // === Auto-generated postamble setup entry stuff ===
