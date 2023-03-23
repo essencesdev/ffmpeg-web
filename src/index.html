@@ -20,7 +20,6 @@
 			background: var(--bg);
 			color: var(--fg);
 			font-family: Verdana, Geneva, Tahoma, sans-serif;
-			line-height: var(--font-size-3);
 		}
 
 		#title {
@@ -49,7 +48,7 @@
 			cursor: pointer;
 			display: flex;
 			min-width: 250px;
-			width: 20%;
+			max-width: 20%;
 			aspect-ratio: 1/1;
 			justify-content: center;
 			align-items: center;
@@ -60,8 +59,9 @@
 		}
 
 		#description {
-			width: 80ch;
+			max-width: 80ch;
 			font-size: var(--font-size-2);
+			line-height: var(--font-size-3);
 			margin-top: var(--spacing-2);
 		}
 
@@ -72,12 +72,13 @@
 		}
 		#media-container {
 			display: flex;
+			justify-content: center;
 			margin-top: var(--spacing-2);
 			margin-bottom: var(--spacing-2);
 		}
 		.media-displayer {
-			flex: 50%;
-			min-height: 50vh;
+			max-width: 45%;
+			aspect-ratio: 1/1;
 			display: block;
 			text-align: center;
 			margin: var(--spacing-2);
@@ -99,6 +100,7 @@
 		}
 		#ffmpeg-command {
 			flex-grow: 1;
+			min-width: 0;
 			border: var(--size-1) solid var(--grey-4);
 			border-radius: 0 var(--size-2) 0 0;
 		}
@@ -145,11 +147,12 @@
 
 		.popup {
 			position: absolute;
-			top: var(--spacing-3);
-			left: var(--spacing-3);
+			margin: var(--spacing-3);
 			border: var(--size-1) solid var(--red-1);
 			background-color: var(--pink-1);
 			padding: var(--spacing-1);
+			top: 0;
+			left: 0;
 		}
 
 		#file-upload:valid,
@@ -188,7 +191,10 @@
 				<progress id="progress-bar" value="0"></progress>
 				<section id="ffmpeg-command-container">
 					<button id="execute-ffmpeg">ffmpeg</button>
-					<input id="ffmpeg-command" placeholder="-filters" />
+					<input
+						id="ffmpeg-command"
+						placeholder="-i (yourfile) (newfile)"
+					/>
 				</section>
 				<details id="ffmpeg-output-container">
 					<summary>Output</summary>

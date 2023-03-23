@@ -23,8 +23,9 @@ export class MediaDisplayElement extends HTMLElement {
 			}
 			.download-link {
 				position: absolute;
-				top: 10px;
-				left: 10px;
+				margin: 10px;
+				top: 0;
+				left: 0;
 				display: none;
 				background-color: white;
 				border: 1px solid black;
