@@ -69,6 +69,8 @@ let fileData: { name: string; data: FileData; type: string };
 							: value // assume it's a boolean
 							? "Yes"
 							: "No";
+					column.setAttribute("data-value", String(value));
+
 					row.appendChild(column);
 				}
 				supportedFeaturesTable.appendChild(row);

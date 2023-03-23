@@ -173,13 +173,17 @@
 				border: var(--size-1) solid var(--grey-2);
 				padding: var(--spacing-2);
 			}
+			#support-table :is(td)[data-value="true"] {
+				color: var(--green-1);
+			}
+			#support-table td[data-value="false"] {
+				color: var(--red-1);
+			}
 
 			#file-upload:valid,
 			#file-upload:invalid ~ #description,
-			#file-upload:valid
-				~ #editor
-				#file-upload:invalid
-				~ label[for="file-upload"] {
+			#file-upload:valid ~ #editor,
+			#file-upload:invalid ~ label[for="file-upload"] {
 				display: block;
 			}
 			#file-upload:invalid,
@@ -231,8 +235,10 @@
 					/>
 				</section>
 				<details id="ffmpeg-output-container">
-					<summary>FFmpeg Console Output</summary>
-					<pre id="output">This will fill up when you run a command</pre>
+					<summary>FFmpeg console output</summary>
+					<pre id="output">
+						This will fill up when you run a command
+						</pre>
 				</details>
 			</section>
 			<section id="support">
