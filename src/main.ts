@@ -33,7 +33,6 @@ let fileData: { name: string; data: FileData; type: string };
 				const codecRow =
 					/^ [D.][E.][VAS.][I.][L.][S.] [^=].+?\s+.+?/g.test(data);
 				if (!codecRow) return;
-				console.log(data);
 
 				const [, support, abbreviation, ...name] = data.split(/ +/);
 				// check support length?

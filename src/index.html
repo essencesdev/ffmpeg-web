@@ -55,14 +55,15 @@
 				cursor: pointer;
 				display: flex;
 				min-width: 250px;
-				max-width: 20%;
-				aspect-ratio: 1/1;
+				width: min(50vh, 50vw);
+				aspect-ratio: 2/1;
 				justify-content: center;
 				align-items: center;
 				text-align: center;
 				border: var(--size-1) dashed var(--blue-1);
 				border-radius: var(--size-4);
 				padding: var(--spacing-2);
+				margin: var(--spacing-4);
 			}
 
 			#description {
@@ -79,7 +80,7 @@
 			}
 			#media-container {
 				display: flex;
-				justify-content: center;
+				justify-content: space-evenly;
 				margin-top: var(--spacing-2);
 				margin-bottom: var(--spacing-2);
 			}
@@ -166,6 +167,7 @@
 			#support {
 				overflow: auto;
 				max-width: 100%;
+				min-width: 250px;
 			}
 			#support-table :is(tr, th, td) {
 				border: var(--size-1) solid var(--grey-2);
@@ -195,6 +197,15 @@
 				Javascript is required for this page to function properly!
 			</noscript>
 			<input type="file" id="file-upload" required />
+			<section id="description">
+				<p>
+					This page runs a version of FFmpeg targetted at browsers via
+					wasm. It does not support every codec or format that FFmpeg
+					can support because it was compiled with the idea of keeping
+					the resulting binaries relatively small. All data and
+					operations will run on your machine, in your browser.
+				</p>
+			</section>
 			<label for="file-upload">
 				Click here to upload a file (no dragging!)
 			</label>
@@ -223,20 +234,6 @@
 					<summary>FFmpeg Console Output</summary>
 					<pre id="output">This will fill up when you run a command</pre>
 				</details>
-			</section>
-			<section id="description">
-				<p>
-					This page runs a version of FFmpeg targetted at browsers via
-					wasm. It does not support every codec or format that FFmpeg
-					can support because it was compiled with the idea of keeping
-					the resulting binaries relatively small. All data and
-					operations will run on your machine, in your browser.
-				</p>
-				<p> Usage: </p>
-				<ol>
-					<li>Upload a file to the page</li>
-					<li>Use</li>
-				</ol>
 			</section>
 			<section id="support">
 				<p>
