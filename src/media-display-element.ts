@@ -31,6 +31,7 @@ export class MediaDisplayElement extends HTMLElement {
 				background-color: white;
 				border: 1px solid black;
 				padding: 5px;
+				word-break: break-all;
 			}
 			.media-container:hover > .download-link {
 				display: block;
@@ -51,7 +52,7 @@ export class MediaDisplayElement extends HTMLElement {
 
 		if (this.#_downloadLink !== null) {
 			this.#_downloadLink.download = this.#_name;
-			this.#_downloadLink.textContent = `Download ${this.#_name}`;
+			this.#_downloadLink.textContent = this.#_name;
 		}
 	}
 
@@ -109,7 +110,7 @@ export class MediaDisplayElement extends HTMLElement {
 		this.#_downloadLink.classList.add("download-link");
 		this.#_downloadLink.href = url;
 		this.#_downloadLink.download = this.#_name;
-		this.#_downloadLink.textContent = `Download ${this.#_name}`;
+		this.#_downloadLink.textContent = this.#_name;
 		this.#_container.appendChild(this.#_downloadLink);
 	}
 }
