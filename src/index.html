@@ -179,6 +179,9 @@
 	<body>
 		<h1 id="title"> FFmpeg in the browser </h1>
 		<div id="main">
+			<noscript class="popup">
+				Javascript is required for this page to function properly!
+			</noscript>
 			<input type="file" id="file-upload" required />
 			<label for="file-upload">
 				Click here to upload a file (no dragging!)
@@ -214,8 +217,8 @@
 					This page runs a version of FFmpeg targetted at browsers via
 					wasm. It does not support every codec or format that FFmpeg
 					can support because it was compiled with the idea of keeping
-					the resulting binaries relatively small. Everything is run
-					inside your own browser.
+					the resulting binaries relatively small. All data and
+					operations will run on your machine, in your browser.
 				</p>
 				<p> Usage: </p>
 				<ol>
