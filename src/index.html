@@ -1,0 +1,216 @@
+<html>
+	<link rel="stylesheet" href="/colors.css" />
+	<style>
+		:root {
+			--spacing-1: 5px;
+			--spacing-2: 12px;
+			--spacing-3: 24px;
+			--spacing-4: 36px;
+
+			--size-1: 1px;
+			--size-2: 12px;
+			--size-3: 24px;
+			--size-4: 50px;
+
+			--font-size-1: 12px;
+			--font-size-2: 16px;
+			--font-size-3: 24px;
+		}
+		body {
+			background: var(--bg);
+			color: var(--fg);
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			line-height: var(--font-size-3);
+		}
+
+		#title {
+			color: var(--green-1);
+			padding: var(--spacing-2);
+		}
+
+		#main {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background-color: var(--grey-1);
+			margin: var(--spacing-3);
+			padding: var(--spacing-3);
+			border-radius: var(--size-3);
+		}
+
+		#file-upload {
+			border: var(--size-1) dashed var(--blue-1);
+			border-radius: var(--spacing-2);
+			padding: var(--spacing-2);
+			background-color: var(--bg);
+			color: var(--fg);
+		}
+		label[for="file-upload"] {
+			cursor: pointer;
+			display: flex;
+			min-width: 250px;
+			width: 20%;
+			aspect-ratio: 1/1;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border: var(--size-1) dashed var(--blue-1);
+			border-radius: var(--size-4);
+			padding: var(--spacing-2);
+		}
+
+		#description {
+			width: 80ch;
+			font-size: var(--font-size-2);
+			margin-top: var(--spacing-2);
+		}
+
+		#editor {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+		}
+		#media-container {
+			display: flex;
+			margin-top: var(--spacing-2);
+			margin-bottom: var(--spacing-2);
+		}
+		.media-displayer {
+			flex: 50%;
+			min-height: 50vh;
+			display: block;
+			text-align: center;
+			margin: var(--spacing-2);
+			background-color: var(--bg);
+		}
+		#original-media.media-displayer {
+			border: var(--size-1) solid var(--green-1);
+		}
+		#processed-media.media-displayer {
+			border: var(--size-1) solid var(--orange-1);
+		}
+
+		#ffmpeg-command-container,
+		#ffmpeg-output-container {
+			display: flex;
+			flex-grow: 1;
+			margin-left: var(--spacing-2);
+			margin-right: var(--spacing-2);
+		}
+		#ffmpeg-command {
+			flex-grow: 1;
+			border: var(--size-1) solid var(--grey-4);
+			border-radius: 0 var(--size-2) 0 0;
+		}
+		#execute-ffmpeg {
+			border: calc(var(--size-1) * 5) solid var(--pink-1);
+		}
+		#execute-ffmpeg:hover {
+			border: calc(var(--size-1) * 5) solid var(--pink-2);
+			cursor: pointer;
+		}
+		#ffmpeg-command,
+		#execute-ffmpeg {
+			font-size: var(--font-size-3);
+			line-height: var(--font-size-3);
+			background: var(--bg);
+			color: var(--fg);
+			padding: var(--spacing-1);
+			font-family: monospace, monospace;
+		}
+
+		#progress-bar {
+			flex-grow: 1;
+			margin-left: var(--spacing-2);
+			margin-right: var(--spacing-2);
+			display: none;
+		}
+
+		#progress-bar[max] {
+			display: block;
+		}
+
+		#ffmpeg-output-container {
+			border: var(--size-1) solid var(--grey-4);
+			padding: var(--spacing-2);
+			border-radius: 0 0 var(--size-2) var(--size-2);
+		}
+		#output {
+			overflow: auto;
+			max-height: 300px;
+		}
+		#ffmpeg-output-container > summary {
+			cursor: pointer;
+		}
+
+		.popup {
+			position: absolute;
+			top: var(--spacing-3);
+			left: var(--spacing-3);
+			border: var(--size-1) solid var(--red-1);
+			background-color: var(--pink-1);
+			padding: var(--spacing-1);
+		}
+
+		#file-upload:valid,
+		#file-upload:invalid ~ #description,
+		#file-upload:valid
+			~ #editor
+			#file-upload:invalid
+			~ label[for="file-upload"] {
+			display: block;
+		}
+		#file-upload:invalid,
+		#file-upload:valid ~ #description,
+		#file-upload:invalid ~ #editor,
+		#file-upload:valid ~ label[for="file-upload"] {
+			display: none;
+		}
+	</style>
+	<body>
+		<h1 id="title"> FFmpeg in the browser </h1>
+		<div id="main">
+			<input type="file" id="file-upload" required />
+			<label for="file-upload">
+				Click here to upload a file (no dragging!)
+			</label>
+			<section id="editor">
+				<section id="media-container">
+					<media-display
+						class="media-displayer"
+						id="original-media"
+					></media-display>
+					<media-display
+						class="media-displayer"
+						id="processed-media"
+					></media-display>
+				</section>
+				<progress id="progress-bar" value="0"></progress>
+				<section id="ffmpeg-command-container">
+					<button id="execute-ffmpeg">ffmpeg</button>
+					<input id="ffmpeg-command" placeholder="-filters" />
+				</section>
+				<details id="ffmpeg-output-container">
+					<summary>Output</summary>
+					<pre id="output"></pre>
+				</details>
+			</section>
+			<section id="description">
+				<p>
+					This page runs a version of FFmpeg targetted at browsers via
+					wasm. It does not support every codec or format that FFmpeg
+					can support because it was compiled with the idea of keeping
+					the resulting binaries relatively small. Everything is run
+					inside your own browser.
+				</p>
+				<p> Usage: </p>
+				<ol>
+					<li>Upload a file to the page</li>
+					<li>Use</li>
+				</ol>
+			</section>
+		</div>
+		<script type="module" src="main.js"></script>
+		<script type="module" src="media-display-element.js"></script>
+	</body>
+</html>
