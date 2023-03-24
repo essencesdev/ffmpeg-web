@@ -53,14 +53,14 @@ let fileData: { name: string; data: FileData; type: string };
 
 				const row = document.createElement("tr");
 				for (const value of [
+					abbreviation,
+					codecType,
+					name.join(" "),
 					decodingSupport,
 					encodingSupport,
-					codecType,
 					intraFrameOnly,
 					lossyCompression,
 					losslessCompression,
-					abbreviation,
-					name.join(" "),
 				]) {
 					const column = document.createElement("td");
 					column.textContent =
