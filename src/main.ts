@@ -46,6 +46,7 @@ fileUpload.onchange = () => {
 };
 
 executeButton.onclick = () => {
+	executeButton.disabled = true;
 	progressBar.removeAttribute("value");
 	const obj = {
 		MEMFS: [fileData],
@@ -65,6 +66,7 @@ executeButton.onclick = () => {
 			progressBar.value = 0;
 			bootlegPopup("There was an issue running FFmpeg, check the output");
 		}
+		executeButton.disabled = false;
 	};
 
 	ffmpeg(obj, {

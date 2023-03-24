@@ -114,12 +114,18 @@
 				border: var(--size-1) solid var(--grey-4);
 				border-radius: 0 var(--size-2) 0 0;
 			}
-			#execute-ffmpeg {
+			#execute-ffmpeg:not(:disabled) {
 				border: calc(var(--size-1) * 5) solid var(--pink-1);
 			}
-			#execute-ffmpeg:hover {
+			#execute-ffmpeg:disabled {
+				filter: brightness(50%);
+			}
+			#execute-ffmpeg:not(:disabled):hover {
 				border: calc(var(--size-1) * 5) solid var(--pink-2);
 				cursor: pointer;
+			}
+			#execute-ffmpeg:not(:disabled):active {
+				filter: drop-shadow(0 0 var(--size-2) var(--pink-2));
 			}
 			#ffmpeg-command,
 			#execute-ffmpeg {
