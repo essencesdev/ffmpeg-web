@@ -21,7 +21,6 @@ const output = document.getElementById("output") as HTMLPreElement;
 
 let fileData: { name: string; data: FileData; type: string };
 
-
 function bootlegPopup(text: string) {
 	const popup = document.createElement("div");
 	popup.classList.add("popup");
