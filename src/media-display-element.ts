@@ -86,26 +86,33 @@ export class MediaDisplayElement extends ShadowedWithStylesheetElement {
 			this.#_downloadLink = null;
 		}
 
-		if (this.#_source === null) {
+		if (this.source === null) {
 			return;
 		}
 
-		if (this.#_source.type.startsWith("video/")) {
+		if (this.source.type.startsWith("video/")) {
 			this.#_mediaElement = document.createElement("video");
 			this.#_mediaElement.controls = true;
 			// this.#_mediaElement.videoWidth;
-		} else if (this.#_source.type.startsWith("audio/")) {
+		} else if (this.source.type.startsWith("audio/")) {
 			this.#_mediaElement = document.createElement("audio");
 			this.#_mediaElement.controls = true;
-		} else if (this.#_source.type.startsWith("image/")) {
+		} else if (this.source.type.startsWith("image/")) {
 			this.#_mediaElement = document.createElement("img");
 			// this.#_mediaElement.naturalWidth;
 		} else {
-			console.log(`Unrecognized media type ${this.#_source.type}`);
+			console.log(`Unrecognized media type ${this.source.type}`);
 			return;
 		}
 
-		const url = URL.createObjectURL(this.#_source);
+		const mediaElement = this.#_mediaElement;
+		mediaElement.onerror = () => {
+			// timeout to prevent endless brute forcing because we're failures
+			setTimeout(() => this.#tryLoadAgainWithNewType(), 1000);
+			mediaElement.onerror = null;
+		};
+
+		const url = URL.createObjectURL(this.source);
 		this.#_mediaElement.src = url;
 		this.#_container.appendChild(this.#_mediaElement);
 		this.#_downloadLink = document.createElement("a");
@@ -114,6 +121,16 @@ export class MediaDisplayElement extends ShadowedWithStylesheetElement {
 		this.#_downloadLink.download = this.#_name;
 		this.#_downloadLink.textContent = this.#_name;
 		this.#_container.appendChild(this.#_downloadLink);
+	}
+
+	#tryLoadAgainWithNewType() {
+		// brute force the correct version, or at least try to.
+		const rotation = ["video/", "audio/", "image/", "video/"];
+		if (this.source === null) return;
+
+		const start =
+			rotation.findIndex((ele) => this.source!.type.startsWith(ele)) + 1;
+		this.source = this.source.slice(0, this.source.size, rotation[start]);
 	}
 }
 
