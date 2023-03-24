@@ -1,4 +1,6 @@
-export class MediaDisplayElement extends HTMLElement {
+import { ShadowedWithStylesheetElement } from "./shadowed-with-stylesheet-element.js";
+
+export class MediaDisplayElement extends ShadowedWithStylesheetElement {
 	#_source: Blob | null = null;
 	#_container: HTMLDivElement;
 	#_mediaElement: HTMLMediaElement | HTMLImageElement | null = null;
@@ -7,7 +9,6 @@ export class MediaDisplayElement extends HTMLElement {
 
 	constructor() {
 		super();
-		this.attachShadow({ mode: "open" });
 		const style = document.createElement("style");
 		style.textContent = `
 			.media-container {
@@ -28,8 +29,9 @@ export class MediaDisplayElement extends HTMLElement {
 				top: 0;
 				left: 0;
 				display: none;
-				background-color: white;
-				border: 1px solid black;
+				color: var(--fg);
+				background-color: var(--bg);
+				border: 1px solid var(--fg);
 				padding: 5px;
 				word-break: break-all;
 			}
