@@ -108,7 +108,7 @@ executeButton.onclick = () => {
 	const obj = {
 		MEMFS: [fileData],
 		// what about quotes for filters?
-		arguments: commandInput.value.trim().split(/\s+/),
+		arguments: commandInput.value.trim().split(/\s+/).map(arg => arg.replace(/^['"]|['"]$/g, "")),
 	};
 
 	let success = false;
